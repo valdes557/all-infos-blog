@@ -1,0 +1,222 @@
+@import url('https://fonts.googleapis.com/css2?family=Gelasio&family=Inter:wght@400;500;600;700&family=Poppins:wght@400;500;600;700;800&display=swap');
+@import "@flaticon/flaticon-uicons/css/all/all";
+@import "./editor-theme.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+    * {
+        @apply m-0 p-0 box-border text-base outline-purple/30 duration-200;
+    }
+
+    html{
+        @apply overflow-x-hidden scroll-smooth;
+    }
+
+    body {
+        @apply font-inter font-normal text-black bg-white antialiased;
+    }
+
+    i {
+        @apply mt-0.5;
+    }
+
+    section{
+        @apply py-6 px-[5vw] md:px-[7vw] lg:px-[10vw];
+    }
+
+    ::selection {
+        @apply bg-purple/30;
+    }
+
+    img{
+        @apply w-full h-full object-cover;
+    }
+
+    /* Modern Glass Navbar */
+    .navbar{
+        @apply z-50 sticky top-0 flex items-center gap-8 w-full px-[5vw] py-4 h-[80px] 
+               bg-white/80 backdrop-blur-xl border-b border-grey/50
+               shadow-soft transition-all duration-300;
+    }
+
+    .h-cover{
+        @apply min-h-[calc(100vh-80px)];
+    }
+
+    .center{
+        @apply block mx-auto;
+    }
+
+    /* Modern Buttons */
+    .btn-dark{
+        @apply whitespace-nowrap bg-gradient-primary text-white rounded-full py-3 px-8 text-xl capitalize 
+               hover:shadow-glow hover:scale-105 transition-all duration-300 font-medium
+               border-0 cursor-pointer;
+    }
+
+    .btn-light{
+        @apply whitespace-nowrap bg-grey text-black rounded-full py-3 px-8 text-xl capitalize 
+               hover:bg-grey/80 hover:shadow-soft transition-all duration-300 font-medium
+               border border-grey/50 cursor-pointer;
+    }
+
+    .btn-gradient {
+        @apply bg-gradient-primary text-white rounded-full py-3 px-8 font-semibold
+               hover:shadow-glow hover:scale-105 transition-all duration-300;
+    }
+
+    .btn-outline {
+        @apply bg-transparent border-2 border-purple text-purple rounded-full py-3 px-8 font-semibold
+               hover:bg-purple hover:text-white transition-all duration-300;
+    }
+
+    /* Modern Input */
+    .input-box {
+        @apply w-full rounded-xl p-4 bg-grey/50 pl-12 border border-grey/50 
+               focus:bg-white focus:border-purple/50 focus:shadow-soft
+               placeholder:text-dark-grey/60 transition-all duration-300;
+    }
+
+    input:disabled, input:disabled ~ .input-icon{
+        @apply opacity-50;
+    }
+
+    .input-icon{
+        @apply absolute left-4 top-1/2 -translate-y-1/2 text-dark-grey;
+    }
+
+    .link{
+        @apply text-dark-grey hover:text-purple hover:bg-purple/5 p-3 px-4 block 
+               rounded-lg transition-all duration-200;
+    }
+
+    .hide{
+        @apply opacity-0 pointer-events-none duration-200;
+    }
+
+    .show{
+        @apply opacity-100 pointer-events-auto;
+    }
+
+    /* Modern Sidebar */
+    .sidebar-link{
+        @apply flex gap-4 items-center py-4 px-4 text-dark-grey hover:text-purple 
+               hover:bg-purple/5 rounded-xl transition-all duration-200;
+    }
+
+    .sidebar-link.active{
+        @apply text-purple bg-purple/10 font-medium
+               border-l-4 border-purple rounded-l-none;
+    }
+
+    #textEditor h2, h2{
+        @apply font-poppins text-4xl leading-normal font-bold max-md:text-3xl max-md:leading-snug !important;
+    }
+
+    #textEditor h3, h3 {
+        @apply font-poppins text-3xl leading-loose max-md:text-2xl max-md:leading-normal !important;
+    }
+
+    #textEditor *, .blog-page-content *{
+        @apply font-gelasio text-xl leading-10 md:text-2xl;
+    }
+
+    #textEditor a, .blog-page-content a{
+        @apply text-purple underline hover:opacity-70 transition-opacity;
+    }
+
+    /* Modern Tags */
+    .tag{
+        @apply py-2 px-5 bg-gradient-to-r from-purple/10 to-secondary/10 
+               text-purple rounded-full capitalize font-medium text-sm
+               hover:from-purple/20 hover:to-secondary/20 transition-all duration-200
+               cursor-pointer border border-purple/20;
+    }
+
+    .tag.active, .tag:hover {
+        @apply bg-gradient-primary text-white border-transparent;
+    }
+
+    .blog-title{
+        @apply text-2xl font-semibold leading-7 line-clamp-3 sm:line-clamp-2 
+               font-poppins hover:text-purple transition-colors;
+    }
+
+    .blog-index{
+        @apply text-4xl sm:text-3xl lg:text-5xl font-bold bg-gradient-primary 
+               bg-clip-text text-transparent leading-none;
+    }
+
+    /* Modern Card Styles */
+    .card {
+        @apply bg-white rounded-2xl p-6 shadow-soft hover:shadow-card 
+               transition-all duration-300 border border-grey/30;
+    }
+
+    .card-hover {
+        @apply hover:translate-y-[-4px] hover:shadow-elevated;
+    }
+
+    /* Glass Effect */
+    .glass {
+        @apply bg-white/70 backdrop-blur-xl border border-white/20 shadow-soft;
+    }
+
+    /* Hero Section */
+    .hero-gradient {
+        @apply bg-gradient-hero bg-[length:200%_200%] animate-gradient;
+    }
+
+    /* Avatar Ring */
+    .avatar-ring {
+        @apply ring-4 ring-purple/20 ring-offset-2 ring-offset-white;
+    }
+
+    /* Floating Animation */
+    .float-animation {
+        @apply animate-float;
+    }
+
+    /* Gradient Text */
+    .gradient-text {
+        @apply bg-gradient-primary bg-clip-text text-transparent;
+    }
+
+    /* Scrollbar Styling */
+    ::-webkit-scrollbar {
+        @apply w-2;
+    }
+
+    ::-webkit-scrollbar-track {
+        @apply bg-grey;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        @apply bg-purple/30 rounded-full hover:bg-purple/50;
+    }
+
+    /* Loading Skeleton */
+    .skeleton {
+        @apply bg-gradient-to-r from-grey via-white to-grey bg-[length:200%_100%] 
+               animate-pulse rounded-lg;
+    }
+}
+
+.ce-block__content, .ce-toolbar__content{
+    max-width: 900px;
+}
+
+.cdx-settings-button[data-tune='withBorder'],
+.cdx-settings-button[data-tune='withBackground'],
+.cdx-settings-button[data-tune='stretched'] {
+  display: none;
+}
+
+/* Additional Animations */
+@keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+}
