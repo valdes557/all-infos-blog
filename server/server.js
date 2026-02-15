@@ -6,8 +6,8 @@ import { nanoid } from 'nanoid';
 import jwt from 'jsonwebtoken';
 import cors from 'cors';
 import admin from 'firebase-admin';
-import serviceAccountKey from './allinfo-310b2-firebase-adminsdk-fbsvc-c58ab53387.json' with { type: 'json' };
 import { getAuth } from 'firebase-admin/auth';
+import { readFileSync, existsSync } from 'fs';
 import aws from 'aws-sdk';
 import crypto from 'crypto';
 import nodemailer from 'nodemailer';
@@ -20,7 +20,7 @@ import Notification from './Schema/Notification.js';
 import Category from './Schema/Category.js';
 
 const server = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 // MongoDB Connection
 mongoose.connect(process.env.MONGODB_URI, {
@@ -30,6 +30,13 @@ mongoose.connect(process.env.MONGODB_URI, {
 .catch(err => console.error('❌ MongoDB connection error:', err));
 
 // Firebase initialization
+let serviceAccountKey;
+if (process.env.FIREBASE_SERVICE_ACCOUNT) {
+    serviceAccountKey = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
+} else {
+    const firebaseFile = './allinfo-310b2-firebase-adminsdk-fbsvc-c58ab53387.json';
+    serviceAccountKey = JSON.parse(readFileSync(new URL(firebaseFile, import.meta.url), 'utf-8'));
+}
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccountKey)
 });
@@ -76,12 +83,17 @@ const verifyJWT = (req, res, next) => {
         return res.status(401).json({ error: 'No access token' });
     }
 
-    jwt.verify(token, process.env.SECRET_ACCESS_KEY, (err, user) => {
+    jwt.verify(token, process.env.SECRET_ACCESS_KEY, async (err, user) => {
         if (err) {
             return res.status(403).json({ error: 'Access token is invalid' });
         }
         req.user = user.id;
-        req.admin = user.admin;
+        try {
+            const dbUser = await User.findById(user.id).select('admin');
+            req.admin = dbUser ? dbUser.admin : false;
+        } catch {
+            req.admin = user.admin;
+        }
         next();
     });
 };
@@ -111,6 +123,16 @@ const generateUsername = async (email) => {
 };
 
 // ==================== ROUTES ====================
+
+// Check current admin status from DB
+server.get('/check-admin-status', verifyJWT, async (req, res) => {
+    try {
+        const user = await User.findById(req.user).select('admin');
+        return res.status(200).json({ isAdmin: user ? user.admin : false });
+    } catch (err) {
+        return res.status(500).json({ error: err.message });
+    }
+});
 
 // Upload URL
 server.get('/get-upload-url', (req, res) => {

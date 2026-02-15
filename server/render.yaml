@@ -23,3 +23,5 @@ services:
         sync: false
       - key: FRONTEND_URL
         sync: false
+      - key: FIREBASE_SERVICE_ACCOUNT
+        sync: false

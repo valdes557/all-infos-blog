@@ -5,6 +5,7 @@ const BackButton = ({ className = "" }) => {
 
     return (
         <button
+            type="button"
             onClick={() => navigate(-1)}
             className={`flex items-center gap-2 text-dark-grey hover:text-black transition-colors ${className}`}
         >

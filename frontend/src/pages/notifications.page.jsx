@@ -7,6 +7,7 @@ import AnimationWrapper from "../common/page-animation";
 import NoDataMessage from "../components/nodata.component";
 import NotificationCard from "../components/notification-card.component";
 import LoadMoreDataBtn from "../components/load-more.component";
+import BackButton from "../components/back-button.component";
 
 const Notifications = () => {
 
@@ -67,7 +68,7 @@ const Notifications = () => {
 
     return (
         <div>
-
+            <BackButton className="mb-2" />
             <h1 className="max-md:hidden">Recent Notifications</h1>
 
             <div className="my-8 flex gap-6">

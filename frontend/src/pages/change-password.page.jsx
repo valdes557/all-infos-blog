@@ -4,6 +4,7 @@ import InputBox from "../components/input.component";
 import { useContext, useRef } from "react";
 import { toast, Toaster } from "react-hot-toast";
 import { UserContext } from "../App"
+import BackButton from "../components/back-button.component";
 
 const ChangePassword = () => {
 
@@ -58,7 +59,7 @@ const ChangePassword = () => {
         <AnimationWrapper>
             <Toaster />
             <form ref={changePasswordForm}>
-
+                <BackButton className="mb-2" />
                 <h1 className="max-md:hidden">Change Password</h1>
 
                 <div className="py-10 w-full md:max-w-[400px]">

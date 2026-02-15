@@ -10,6 +10,7 @@ import AnimationWrapper from "../common/page-animation";
 import { ManageDraftBlogPost, ManagePublishedBlogCard } from "../components/manage-blogcard.component";
 import LoadMoreDataBtn from "../components/load-more.component";
 import { useSearchParams } from "react-router-dom";
+import BackButton from "../components/back-button.component";
 
 const ManageBlogs = () => {
     
@@ -90,6 +91,7 @@ const ManageBlogs = () => {
     
     return (
         <>
+            <BackButton className="mb-2" />
             <h1 className="max-md:hidden">Manage Blogs</h1>
 
             <Toaster />

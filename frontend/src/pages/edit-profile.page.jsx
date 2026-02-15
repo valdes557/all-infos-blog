@@ -8,6 +8,7 @@ import toast, { Toaster } from "react-hot-toast";
 import InputBox from "../components/input.component";
 import { uploadImage } from "../common/aws";
 import { storeInSession } from "../common/session";
+import BackButton from "../components/back-button.component";
 
 const EditProfile = () => {
 
@@ -161,7 +162,7 @@ const EditProfile = () => {
                 loading ? <Loader /> :
                 <form ref={editProfileForm}>
                     <Toaster />
-
+                    <BackButton className="mb-2" />
                     <h1 className="max-md:hidden">Edit Profile</h1>
 
                     <div className="flex flex-col lg:flex-row items-start py-10 gap-8 lg:gap-10">

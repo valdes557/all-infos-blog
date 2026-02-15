@@ -23,7 +23,9 @@
    EMAIL_USER=votre_email@gmail.com
    EMAIL_PASS=votre_mot_de_passe_app
    FRONTEND_URL=https://votre-app.vercel.app
+   FIREBASE_SERVICE_ACCOUNT={"type":"service_account","project_id":"...","private_key":"...","client_email":"..."}
    ```
+   > **Note :** Pour `FIREBASE_SERVICE_ACCOUNT`, copiez le contenu complet de votre fichier JSON Firebase en une seule ligne.
 
 4. **Déployer** - Render déploiera automatiquement
 

@@ -1,10 +1,12 @@
 import { useContext, useEffect, useRef, useState } from "react"
 import { Outlet, Navigate, NavLink } from "react-router-dom"
 import { UserContext } from "../App"
+import axios from "axios"
+import { storeInSession } from "../common/session"
 
 const SideNav = () => {
 
-    let { userAuth: { access_token, new_notification_available, isAdmin } } = useContext(UserContext)
+    let { userAuth, userAuth: { access_token, new_notification_available, isAdmin }, setUserAuth } = useContext(UserContext)
 
     let page = location.pathname.split("/")[2];
 
@@ -34,6 +36,22 @@ const SideNav = () => {
         setShowSideNav(false);
         pageStateTab.current.click();
     }, [pageState])
+
+    useEffect(() => {
+        if (access_token) {
+            axios.get(import.meta.env.VITE_SERVER_DOMAIN + "/check-admin-status", {
+                headers: { Authorization: `Bearer ${access_token}` }
+            })
+            .then(({ data }) => {
+                if (data.isAdmin !== isAdmin) {
+                    let updatedUserAuth = { ...userAuth, isAdmin: data.isAdmin };
+                    storeInSession("user", JSON.stringify(updatedUserAuth));
+                    setUserAuth(updatedUserAuth);
+                }
+            })
+            .catch(() => {});
+        }
+    }, [access_token])
 
     return (
         access_token === null ? <Navigate to="/signin" /> :
