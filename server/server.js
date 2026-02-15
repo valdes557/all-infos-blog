@@ -34,8 +34,13 @@ let serviceAccountKey;
 if (process.env.FIREBASE_SERVICE_ACCOUNT) {
     serviceAccountKey = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
 } else {
-    const firebaseFile = './allinfo-310b2-firebase-adminsdk-fbsvc-c58ab53387.json';
-    serviceAccountKey = JSON.parse(readFileSync(new URL(firebaseFile, import.meta.url), 'utf-8'));
+    const firebaseFilePath = new URL('./allinfo-310b2-firebase-adminsdk-fbsvc-c58ab53387.json', import.meta.url);
+    if (existsSync(firebaseFilePath)) {
+        serviceAccountKey = JSON.parse(readFileSync(firebaseFilePath, 'utf-8'));
+    } else {
+        console.error('❌ Firebase credentials not found. Set FIREBASE_SERVICE_ACCOUNT env var with the JSON content of your Firebase service account file.');
+        process.exit(1);
+    }
 }
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccountKey)
