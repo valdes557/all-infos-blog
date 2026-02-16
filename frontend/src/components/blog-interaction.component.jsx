@@ -93,7 +93,7 @@ const BlogInteraction = () => {
                     }
 
                     <a 
-                        href={`https://wa.me/?text=${encodeURIComponent(title + ' - ' + location.href)}`}
+                        href={`https://wa.me/?text=${encodeURIComponent(title + '\n\n' + window.location.origin + '/blog/' + blog_id)}`}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="w-10 h-10 rounded-full flex items-center justify-center bg-green-500/20 hover:bg-green-500/40 transition-colors"
@@ -103,7 +103,7 @@ const BlogInteraction = () => {
                     </a>
 
                     <a 
-                        href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(location.href)}&quote=${encodeURIComponent(title)}`}
+                        href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.origin + '/blog/' + blog_id)}&quote=${encodeURIComponent(title)}`}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="w-10 h-10 rounded-full flex items-center justify-center bg-blue-500/20 hover:bg-blue-500/40 transition-colors"
@@ -112,7 +112,13 @@ const BlogInteraction = () => {
                         <i className="fi fi-brands-facebook text-xl text-blue-600"></i>
                     </a>
 
-                    <Link to={`https://twitter.com/intent/tweet?text=Read ${title}&url=${location.href}`}><i className="fi fi-brands-twitter text-xl hover:text-twitter"></i></Link>
+                    <a 
+                        href={`https://twitter.com/intent/tweet?text=${encodeURIComponent('Read: ' + title)}&url=${encodeURIComponent(window.location.origin + '/blog/' + blog_id)}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        <i className="fi fi-brands-twitter text-xl hover:text-twitter"></i>
+                    </a>
                 </div>
             </div>
 

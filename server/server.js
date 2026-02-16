@@ -1267,6 +1267,61 @@ server.post('/admin/delete-user', verifyJWT, async (req, res) => {
     }
 });
 
+// ==================== OG META TAGS FOR SOCIAL SHARING ====================
+
+server.get('/og/blog/:blog_id', async (req, res) => {
+    try {
+        const { blog_id } = req.params;
+        const blog = await Blog.findOne({ blog_id })
+            .populate('author', 'personal_info.fullname personal_info.username personal_info.profile_img');
+
+        if (!blog) {
+            return res.status(404).send('Blog not found');
+        }
+
+        const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:5173';
+        const blogUrl = `${frontendUrl}/blog/${blog.blog_id}`;
+        const title = blog.title || 'AllInfo Blog';
+        const description = blog.des || 'Read this article on AllInfo';
+        const image = blog.banner || '';
+        const authorName = blog.author?.personal_info?.fullname || 'AllInfo';
+
+        res.setHeader('Content-Type', 'text/html; charset=utf-8');
+        res.send(`<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>${title} - AllInfo</title>
+    <meta name="description" content="${description}" />
+    <meta name="author" content="${authorName}" />
+
+    <!-- Open Graph / Facebook / WhatsApp -->
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="${blogUrl}" />
+    <meta property="og:title" content="${title}" />
+    <meta property="og:description" content="${description}" />
+    <meta property="og:image" content="${image}" />
+    <meta property="og:site_name" content="AllInfo" />
+    <meta property="article:author" content="${authorName}" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content="${blogUrl}" />
+    <meta name="twitter:title" content="${title}" />
+    <meta name="twitter:description" content="${description}" />
+    <meta name="twitter:image" content="${image}" />
+
+    <meta http-equiv="refresh" content="0;url=${blogUrl}" />
+</head>
+<body>
+    <p>Redirecting to <a href="${blogUrl}">${title}</a>...</p>
+</body>
+</html>`);
+    } catch (err) {
+        res.status(500).send('Server error');
+    }
+});
+
 server.listen(PORT, () => {
     console.log('🚀 Server listening on port -> ' + PORT);
 });
